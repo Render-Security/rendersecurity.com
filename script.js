@@ -1,4 +1,12 @@
- // Global AI response function - defined first
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js';
+import { firebaseConfig } from './firebase-config.js';
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const functions = getFunctions(app, 'us-central1');
+
+// Global AI response function - defined first
 function generateAdvancedResponse(input) {
     const lowercaseInput = input.toLowerCase();
 
@@ -159,3 +167,90 @@ setInterval(() => {
         }
     });
 }, 100);
+
+// Modal handling
+const modal = document.getElementById('feedbackModal');
+const modalMessage = document.getElementById('modalMessage');
+const closeModal = document.querySelector('.close-modal');
+
+function showModal(message, isSuccess = true) {
+    modalMessage.textContent = message;
+    modalMessage.className = isSuccess ? 'success-message' : 'error-message';
+    modal.style.display = 'block';
+}
+
+function hideModal() {
+    modal.style.display = 'none';
+}
+
+// Close modal when clicking the X or outside the modal
+closeModal.onclick = hideModal;
+window.onclick = (event) => {
+    if (event.target === modal) {
+        hideModal();
+    }
+};
+
+// Contact form handling
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent form from submitting and page from jumping
+        
+        // Get form elements
+        const nameInput = contactForm.querySelector('input[type="text"]');
+        const emailInput = contactForm.querySelector('input[type="email"]');
+        const messageInput = contactForm.querySelector('textarea');
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        
+        // Validate form
+        if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) {
+            showModal('Please fill in all fields before submitting.', false);
+            return;
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+            showModal('Please enter a valid email address.', false);
+            return;
+        }
+        
+        // Disable submit button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+        
+        const formData = {
+            name: nameInput.value.trim(),
+            email: emailInput.value.trim(),
+            message: messageInput.value.trim()
+        };
+
+        console.log('Sending form data:', formData); // Debug log
+
+        try {
+            // Call the Cloud Function
+            const handleContactForm = httpsCallable(functions, 'handleContactForm');
+            console.log('Calling function with data:', formData); // Debug log
+            const result = await handleContactForm(formData);
+            console.log('Function result:', result); // Debug log
+            
+            // Clear form
+            contactForm.reset();
+            
+            // Show success message in modal
+            showModal('Your message has been received! We will get back to you soon.', true);
+        } catch (error) {
+            console.error("Error details:", error); // Enhanced error logging
+            console.error("Error code:", error.code); // Log error code
+            console.error("Error message:", error.message); // Log error message
+            console.error("Error details:", error.details); // Log error details
+            // Show error message in modal
+            showModal('An error has occurred. Please try again.', false);
+        } finally {
+            // Re-enable submit button and restore text
+            submitButton.disabled = false;
+            submitButton.textContent = 'Send Message';
+        }
+    });
+}
