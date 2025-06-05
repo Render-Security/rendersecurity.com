@@ -1,10 +1,9 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-import { getFunctions, httpsCallable, connectFunctionsEmulator } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js';
-import { firebaseConfig } from './firebase-config.js';
+// import { initializeApp } from 'firebase/app';
+// import { getFunctions, httpsCallable } from 'firebase/functions';
+// import { firebaseConfig } from './firebase-config';
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const functions = getFunctions(app, 'us-central1');
+// const app = initializeApp(firebaseConfig);
+// const functions = getFunctions(app, 'us-central1');
 
 // Global AI response function - defined first
 function generateAdvancedResponse(input) {
@@ -196,9 +195,18 @@ const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+
+        if (!nameInput || !emailInput || !messageInput) {
+            console.error('One or more form elements not found');
+            return;
+        }
+
+        const name = nameInput.value;
+        const email = emailInput.value;
+        const message = messageInput.value;
 
         if (!name || !email || !message) {
             alert('Please fill in all fields');
@@ -216,7 +224,7 @@ if (contactForm) {
 
         // For now, just log the data and show success
         console.log('Form data:', { name, email, message });
-        document.getElementById('successMessage').style.display = 'block';
-        document.getElementById('contactForm').reset();
+        showModal('Your message has been received! We will get back to you soon.', true);
+        contactForm.reset();
     });
 }
