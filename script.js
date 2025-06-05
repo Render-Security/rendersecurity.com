@@ -195,62 +195,28 @@ window.onclick = (event) => {
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Prevent form from submitting and page from jumping
-        
-        // Get form elements
-        const nameInput = contactForm.querySelector('input[type="text"]');
-        const emailInput = contactForm.querySelector('input[type="email"]');
-        const messageInput = contactForm.querySelector('textarea');
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        
-        // Validate form
-        if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) {
-            showModal('Please fill in all fields before submitting.', false);
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        if (!name || !email || !message) {
+            alert('Please fill in all fields');
             return;
         }
 
-        // Validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(emailInput.value.trim())) {
-            showModal('Please enter a valid email address.', false);
-            return;
-        }
-        
-        // Disable submit button and show loading state
-        submitButton.disabled = true;
-        submitButton.textContent = 'Sending...';
-        
-        const formData = {
-            name: nameInput.value.trim(),
-            email: emailInput.value.trim(),
-            message: messageInput.value.trim()
-        };
+        // Removed Cloud Function call for now
+        // const handleContactForm = httpsCallable(functions, 'handleContactForm');
+        // try {
+        //   const result = await handleContactForm({ name, email, message });
+        //   console.log('Function result:', result);
+        // } catch (error) {
+        //   console.error("Error details:", error);
+        // }
 
-        console.log('Sending form data:', formData); // Debug log
-
-        try {
-            // Call the Cloud Function
-            const handleContactForm = httpsCallable(functions, 'handleContactForm');
-            console.log('Calling function with data:', formData); // Debug log
-            const result = await handleContactForm(formData);
-            console.log('Function result:', result); // Debug log
-            
-            // Clear form
-            contactForm.reset();
-            
-            // Show success message in modal
-            showModal('Your message has been received! We will get back to you soon.', true);
-        } catch (error) {
-            console.error("Error details:", error); // Enhanced error logging
-            console.error("Error code:", error.code); // Log error code
-            console.error("Error message:", error.message); // Log error message
-            console.error("Error details:", error.details); // Log error details
-            // Show error message in modal
-            showModal('An error has occurred. Please try again.', false);
-        } finally {
-            // Re-enable submit button and restore text
-            submitButton.disabled = false;
-            submitButton.textContent = 'Send Message';
-        }
+        // For now, just log the data and show success
+        console.log('Form data:', { name, email, message });
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('contactForm').reset();
     });
 }
