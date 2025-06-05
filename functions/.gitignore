@@ -1,0 +1,11 @@
+node_modules/
+package-lock.json
+.git/
+dataconnect-generated/
+dataconnect/connector/
+dataconnect/schema/
+firebase-debug.log
+firebase-debug.*.log
+*.local
+.DS_Store
+.vscode/
