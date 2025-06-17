@@ -1,3 +1,11 @@
+// Utility to get correct relative path to components folder
+function getComponentPath(componentFile) {
+    const currentPath = window.location.pathname;
+    const depth = currentPath.replace(/(^\/|\/$)/g, '').split('/').length - 1;
+    const prefix = depth > 0 ? '../'.repeat(depth) : '';
+    return `${prefix}components/${componentFile}`;
+}
+
 // Function to load HTML components
 async function loadComponent(elementId, componentPath, callback) {
     try {
@@ -13,7 +21,7 @@ async function loadComponent(elementId, componentPath, callback) {
 
 // Load components when the DOM is ready
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadComponent('header-container', 'components/header.html', () => {
+    await loadComponent('header-container', getComponentPath('header.html'), () => {
         // Hamburger menu toggle for mobile nav
         const hamburger = document.getElementById('hamburger-menu');
         const navLinks = document.querySelector('.nav-links');
@@ -29,5 +37,5 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
     });
-    await loadComponent('footer-container', 'components/footer.html');
-}); 
+    await loadComponent('footer-container', getComponentPath('footer.html'));
+});
