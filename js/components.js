@@ -11,10 +11,7 @@ async function loadComponent(elementId, componentPath) {
 }
 
 // Load components when the DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Load header
-    loadComponent('header-container', '/components/header.html');
-    
-    // Load footer
-    loadComponent('footer-container', '/components/footer.html');
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadComponent('components/header.html', 'header-container');
+    await loadComponent('components/footer.html', 'footer-container');
 }); 
