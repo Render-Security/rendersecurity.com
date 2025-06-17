@@ -72,4 +72,25 @@
     .services {
         padding: 3rem 0;
     }
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+    .service-card {
+        padding: 1.2rem;
+        font-size: 1rem;
+    }
+    .service-hero h1 {
+        font-size: 2rem;
+    }
+    .service-hero p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .service-card {
+        padding: 0.8rem;
+        font-size: 0.98rem;
+    }
 } 

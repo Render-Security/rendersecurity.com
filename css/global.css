@@ -87,6 +87,18 @@ a:hover {
     }
 }
 
+@media (max-width: 900px) {
+    .container {
+        padding: 0 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 0 12px;
+    }
+}
+
 /* Modal Styles */
 .modal {
     display: none;
@@ -278,13 +290,53 @@ a:hover {
     letter-spacing: 0.5px;
 }
 @media (max-width: 900px) {
-    .footer-container {
-        flex-direction: column;
-        align-items: flex-start;
+    .home-hero {
+        grid-template-columns: 1fr;
         gap: 1.5rem;
-        padding: 2rem 1rem 1rem 1rem;
     }
-    .footer-brand, .footer-links, .footer-contact {
+    .hero {
+        height: auto;
+        min-height: 100vh;
+        padding-top: 5.5rem;
+        padding-bottom: 2rem;
+        flex-direction: column;
+    }
+    .home-hero .hero-text {
         width: 100%;
+        margin-bottom: 2rem;
+    }
+    .container {
+        padding: 0 18px;
+    }
+    .site-footer {
+        margin-top: 2rem;
+    }
+    .about-cards-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.2rem !important;
+        margin-top: 2rem !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    .about-cards-grid > div {
+        width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box;
+    }
+}
+@media (max-width: 600px) {
+    .home-hero {
+        gap: 1rem;
+    }
+    .hero {
+        padding-top: 8rem;
+        padding-bottom: 0.5rem;
+    }
+    .container {
+        padding: 0 12px;
+    }
+    .site-footer {
+        font-size: 0.95rem;
     }
 }

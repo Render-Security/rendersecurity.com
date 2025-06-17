@@ -84,4 +84,67 @@ nav {
     .nav-links {
         display: none;
     }
+}
+
+/* Hamburger styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  z-index: 1100;
+}
+.hamburger span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  margin: 4px 0;
+  background: #00ffff;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+@media (max-width: 900px) {
+  nav {
+    flex-direction: row;
+    padding: 0 10px;
+  }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background: rgba(10,10,10,0.98);
+    border-radius: 10px;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1.2rem 2rem;
+    box-shadow: 0 8px 32px #00ffff22;
+    z-index: 1050;
+    min-width: 180px;
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  .nav-links a {
+    color: #fff;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover {
+    color: #00ffff;
+    background: rgba(0,255,255,0.07);
+    border-radius: 6px;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .dropdown-content {
+    left: auto;
+    right: 0;
+  }
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
 } 
