@@ -1,9 +1,6 @@
-// Utility to get correct relative path to components folder
+// Utility to get correct absolute path to components folder for GitHub Pages
 function getComponentPath(componentFile) {
-    const currentPath = window.location.pathname;
-    const depth = currentPath.replace(/(^\/|\/$)/g, '').split('/').length - 1;
-    const prefix = depth > 0 ? '../'.repeat(depth) : '';
-    return `${prefix}components/${componentFile}`;
+    return '/rendersecurity.com/components/' + componentFile;
 }
 
 // Function to load HTML components
