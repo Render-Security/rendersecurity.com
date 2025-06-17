@@ -3,6 +3,18 @@ function getComponentPath(componentFile) {
     return '/rendersecurity.com/components/' + componentFile;
 }
 
+// Utility to get correct base path for links
+function getBasePath() {
+    // Get the current path, e.g. /rendersecurity.com/pages/compliance-management.html
+    const path = window.location.pathname;
+    // If in a subfolder (e.g. /rendersecurity.com/pages/...), go up one level
+    if (/\/pages\//.test(path)) {
+        return '../';
+    }
+    // Otherwise, we're at the root
+    return '';
+}
+
 // Function to load HTML components
 async function loadComponent(elementId, componentPath, callback) {
     try {
@@ -33,6 +45,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                 };
             });
         }
+        // Dynamically update header nav links
+        const base = getBasePath();
+        document.querySelector('.nav-home').setAttribute('href', base + 'index.html#home');
+        document.querySelector('.nav-services').setAttribute('href', base + 'index.html#services');
+        document.querySelector('.nav-about').setAttribute('href', base + 'index.html#about');
+        document.querySelector('.nav-contact').setAttribute('href', base + 'index.html#contact');
+        document.querySelector('.nav-compliance').setAttribute('href', base + 'pages/compliance-management.html');
+        document.querySelector('.nav-training').setAttribute('href', base + 'pages/security-training.html');
+        document.querySelector('.nav-web').setAttribute('href', base + 'pages/web-design.html');
+        document.querySelector('.nav-maintenance').setAttribute('href', base + 'pages/website-maintenance.html');
+        document.querySelector('.nav-ai').setAttribute('href', base + 'pages/ai-integration.html');
     });
-    await loadComponent('footer-container', getComponentPath('footer.html'));
+    await loadComponent('footer-container', getComponentPath('footer.html'), () => {
+        // Dynamically update footer links
+        const base = getBasePath();
+        document.querySelector('.footer-home').setAttribute('href', base + 'index.html#home');
+        document.querySelector('.footer-services').setAttribute('href', base + 'index.html#services');
+        document.querySelector('.footer-about').setAttribute('href', base + 'index.html#about');
+        document.querySelector('.footer-contact').setAttribute('href', base + 'index.html#contact');
+    });
 });
