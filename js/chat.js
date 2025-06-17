@@ -53,19 +53,6 @@ function generateAdvancedResponse(input) {
     return 'I appreciate you bringing this cybersecurity concern to my attention. While I have extensive knowledge across many security domains, your specific situation may require personalized consultation from our expert team.\n\n**For specialized assistance with your unique challenge:**\n\n📞 **Direct Consultation:** Contact Render Security\'s certified cybersecurity professionals\n• Phone: +1 (555) 123-SECURITY\n• Email: consultation@rendersecurity.com\n• Emergency Hotline: Available 24/7 for urgent security incidents\n\n💼 **What Our Experts Can Provide:**\n• Detailed technical analysis of your specific situation\n• Custom security solutions tailored to your environment\n• Hands-on implementation and ongoing support\n• Industry-specific compliance guidance\n• Emergency incident response services\n\n🎯 **Consultation Process:**\n• Free 30-minute security assessment call\n• Detailed analysis of your security requirements\n• Customized proposal with timelines and investment details\n• Implementation roadmap with measurable outcomes\n\nOur team of CISSP, CISM, and GCIH certified consultants has successfully resolved complex security challenges across diverse industries. We\'ll ensure you receive the expert guidance needed to address your specific cybersecurity concerns.\n\nWould you like me to help schedule a consultation call with one of our specialists?';
 }
 
-// Particle animation
-function createParticles() {
-    const bgAnimation = document.querySelector('.bg-animation');
-    for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 10 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
-        bgAnimation.appendChild(particle);
-    }
-}
-
 // Chat functionality
 function initializeChat() {
     const chatInput = document.getElementById('chatInput');
@@ -140,91 +127,8 @@ function initializeChat() {
     });
 }
 
-// Smooth scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
-// Initialize everything when page loads
+// Initialize chat when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    createParticles();
     initializeChat();
-    console.log('Page initialized');
-});
-
-// Auto-scroll particles
-setInterval(() => {
-    const particles = document.querySelectorAll('.particle');
-    particles.forEach(particle => {
-        if (Math.random() > 0.98) {
-            particle.style.background = Math.random() > 0.5 ? '#ff00ff' : '#00ffff';
-        }
-    });
-}, 100);
-
-// Modal handling
-const modal = document.getElementById('feedbackModal');
-const modalMessage = document.getElementById('modalMessage');
-const closeModal = document.querySelector('.close-modal');
-
-function showModal(message, isSuccess = true) {
-    modalMessage.textContent = message;
-    modalMessage.className = isSuccess ? 'success-message' : 'error-message';
-    modal.style.display = 'block';
-}
-
-function hideModal() {
-    modal.style.display = 'none';
-}
-
-// Close modal when clicking the X or outside the modal
-closeModal.onclick = hideModal;
-window.onclick = (event) => {
-    if (event.target === modal) {
-        hideModal();
-    }
-};
-
-// Contact form handling
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
-        const messageInput = document.getElementById('message');
-
-        if (!nameInput || !emailInput || !messageInput) {
-            console.error('One or more form elements not found');
-            return;
-        }
-
-        const name = nameInput.value;
-        const email = emailInput.value;
-        const message = messageInput.value;
-
-        if (!name || !email || !message) {
-            alert('Please fill in all fields');
-            return;
-        }
-
-        // Removed Cloud Function call for now
-        // const handleContactForm = httpsCallable(functions, 'handleContactForm');
-        // try {
-        //   const result = await handleContactForm({ name, email, message });
-        //   console.log('Function result:', result);
-        // } catch (error) {
-        //   console.error("Error details:", error);
-        // }
-
-        // For now, just log the data and show success
-        console.log('Form data:', { name, email, message });
-        showModal('Your message has been received! We will get back to you soon.', true);
-        contactForm.reset();
-    });
-}
+    console.log('Chat initialized');
+}); 
